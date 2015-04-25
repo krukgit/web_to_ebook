@@ -1,0 +1,17 @@
+Found at <em><%= @page.url %></em>:
+
+<%= form_for @page do |f| %>
+
+  <br/>
+  <label>Title</label><br/>
+  <%= f.text_field :title, value: @page.title %><br/>
+
+  <label>Links</label><br/>
+  <% @page.links.each_with_index do |link, i| %>
+    <%= check_box_tag "links[#{i}]", 'yes', true %>
+    <%= link %>
+    <br/>
+  <% end %>
+
+  <%= f.submit :update %>
+<% end %>

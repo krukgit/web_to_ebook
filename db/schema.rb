@@ -16,10 +16,11 @@ ActiveRecord::Schema.define(version: 20150425161717) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "contents", force: :cascade do |t|
+  create_table "pages", force: :cascade do |t|
     t.string   "title"
     t.string   "url"
     t.text     "links",      default: [], array: true
+    t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

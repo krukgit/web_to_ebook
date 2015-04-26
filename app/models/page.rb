@@ -16,7 +16,7 @@ class Page < ActiveRecord::Base
   end
 
   def fetch_title
-    self.title ||= doc.title
+    self.title ||= Pismo::Document.new(doc.to_html).title
   end
 
   def fetch_links

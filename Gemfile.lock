@@ -37,6 +37,7 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
+    awesome_print (1.6.1)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     builder (3.2.2)
@@ -44,6 +45,7 @@ GEM
       columnize (= 0.9.0)
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
+    chronic (0.10.2)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -58,6 +60,7 @@ GEM
     debug_inspector (0.0.2)
     erubis (2.7.0)
     execjs (2.5.2)
+    fast-stemmer (1.0.2)
     ffi (1.9.8)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
@@ -84,6 +87,12 @@ GEM
     nokogumbo (1.4.1)
       nokogiri
     pg (0.18.1)
+    pismo (0.7.4)
+      awesome_print
+      chronic
+      fast-stemmer
+      nokogiri
+      sanitize
     pry (0.10.1)
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
@@ -178,6 +187,7 @@ DEPENDENCIES
   jquery-rails
   nokogiri
   pg
+  pismo
   pry
   rails (= 4.2.0)
   sanitize

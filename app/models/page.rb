@@ -3,8 +3,14 @@ require 'open-uri'
 class Page < ActiveRecord::Base
   before_validation :fetch_title, :fetch_links, :fetch_content
 
+  def browser
+    @@browser ||= Watir::Browser.new :chrome
+  end
+
   def doc
-    @doc ||= Nokogiri::HTML(open(url))
+    return @doc if @doc
+    @@browser.goto url
+    @doc ||= Nokogiri::HTML(open(@@browser.html))
   end
 
   def fetch_title
@@ -19,6 +25,6 @@ class Page < ActiveRecord::Base
   end
 
   def fetch_content
-
+    doc.css('#content')
   end
 end

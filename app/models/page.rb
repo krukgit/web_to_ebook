@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
   before_validation :fetch_title, :fetch_links, :fetch_content
+  attr_accessor :filename
 
   CONTENT_TAGS = ['#content', '#main', 'article', '.post-body', '.entry-content', '#chapterContent']
   REMOVE_TAGS = ['.toplink', '.adsbygoogle']
@@ -32,11 +33,13 @@ class Page < ActiveRecord::Base
       candidate = doc.css(css)
       html = [html, candidate].select(&:present?).sort_by{|el| el.try(:to_html).length}.first
     end
+    return if !html.present?
     REMOVE_TAGS.each do |css|
       html.css(css).each do |node|
         node.remove
       end
     end
+    return if !html.present?
     REMOVE_KEYWORDS.each do |keyword|
       INSPECT_TAGS.each do |tag|
         html.css(tag).each do |node|
@@ -48,9 +51,11 @@ class Page < ActiveRecord::Base
     self.content = html
   end
 
-  def save_page
-    File.open("page_#{id}.html", 'w') do |file|
+  def save_page path="page.html"
+    self.filename = path
+    File.open(path, 'w') do |file|
       file.write self.content
     end
+    save
   end
 end

@@ -1,6 +1,6 @@
 1. Enter url below:
 
 <%= form_for @page do |f| %>
-  <%= f.text_field :url %>
-  <%= f.submit %>
+  <%= f.text_field :url, class: 'form-control' %>
+  <%= f.submit 'Fetch contents', class: 'btn btn-primary' %>
 <% end %>

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'pages#new'
 
   resources :pages
+  resources :books, only: [:create]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

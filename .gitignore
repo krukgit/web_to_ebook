@@ -13,3 +13,6 @@
 /tmp
 
 .ruby-gemset
+
+/book_*
+*.epub

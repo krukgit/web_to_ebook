@@ -1,6 +1,10 @@
 Found at <em><%= @page.url %></em>:
 
+
 <%= form_for @page do |f| %>
+  <%= f.submit :update, class: 'btn btn-primary' %>
+
+  <%= link_to 'Generate book', books_path(page_id: @page.id), method: :post, class: 'btn btn-danger' %>
 
   <br/>
   <label>Title</label><br/>
@@ -13,5 +17,5 @@ Found at <em><%= @page.url %></em>:
     <br/>
   <% end %>
 
-  <%= f.submit :update %>
+
 <% end %>

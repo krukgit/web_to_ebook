@@ -2,8 +2,10 @@ class Page < ActiveRecord::Base
   before_validation :fetch_title, :fetch_links, :fetch_content
   attr_accessor :filename
 
-  CONTENT_TAGS = ['#content', '#main', 'article', '.post-body', '.entry-content', '#chapterContent']
-  REMOVE_TAGS = ['.toplink', '.adsbygoogle']
+  belongs_to :book
+
+  CONTENT_TAGS = ['#con_L', '#content', '#main', 'article', '.post-body', '.entry-content', '#chapterContent']
+  REMOVE_TAGS = ['a', 'script', 'aside','footer', 'header', 'img', '.toplink', '.adsbygoogle']
   REMOVE_KEYWORDS = ['adsbygoogle', 'Share this:', 'Like this:']
   INSPECT_TAGS = ['tbody','div','table']
   def browser
@@ -23,8 +25,8 @@ class Page < ActiveRecord::Base
   def fetch_links
     return if self.links.present?
     self.links = doc.css('a').map{|link| link['href']}
-    self.links.compact.select!{|link| !link.include? 'javascript'}
-    self.links.compact.map!{|link| link.include?('http') ? link : "#{url}#{link}"}
+    self.links = links.compact.select{|link| !link.include? 'javascript'}
+    self.links = links.compact.map{|link| link.include?('http') ? link : /(.*\/).*$/.match(url)[1] + link }
   end
 
   def fetch_content

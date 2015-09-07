@@ -15,7 +15,8 @@ class PagesController < ApplicationController
   def update
     @page = Page.find(params[:id])
     @page.update_attributes page_params
-    links =  params[:links].map{|k,v| @page.links[k.to_i]}
+    links =  params[:page][:links].select{ |link| link.present? }
+
     @page.update_attributes links: links if links
     render 'pages/show'
   end

@@ -1,10 +1,12 @@
+require 'open-uri'
+
 class Page < ActiveRecord::Base
   before_validation :fetch_title, :fetch_links, :fetch_content
-  attr_accessor :filename
+  attr_accessor :filename, :javascript
 
   belongs_to :book
 
-  CONTENT_TAGS = ['#con_L', '#content', '#main', 'article', '.post-body', '.entry-content', '#chapterContent']
+  CONTENT_TAGS = ['#con_L', '#content', '#main', 'article', '.post-body', '.entry-content', '#chapterContent', '.yd_text2']
   REMOVE_TAGS = ['a', 'script', 'aside','footer', 'header', 'img', '.toplink', '.adsbygoogle']
   REMOVE_KEYWORDS = ['adsbygoogle', 'Share this:', 'Like this:']
   INSPECT_TAGS = ['tbody','div','table']
@@ -14,8 +16,12 @@ class Page < ActiveRecord::Base
 
   def doc
     return @doc if @doc
-    browser.goto url
-    @doc ||= Nokogiri::HTML.parse(browser.html)
+    if javascript
+      browser.goto url
+      @doc ||= Nokogiri::HTML.parse(browser.html)
+    else
+      @doc ||= Nokogiri::HTML.parse(open(url))
+    end
   end
 
   def fetch_title

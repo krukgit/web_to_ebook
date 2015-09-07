@@ -11,11 +11,7 @@ Found at <em><%= @page.url %></em>:
   <%= f.text_field :title, value: @page.title %><br/>
 
   <label>Links</label><br/>
-  <% @page.links.each_with_index do |link, i| %>
-    <%= check_box_tag "links[#{i}]", 'yes', true %>
-    <%= link %>
-    <br/>
-  <% end %>
+  <%= f.select :links, @page.links, {}, { multiple: true, size: @page.links.length } %>
 
 
 <% end %>
